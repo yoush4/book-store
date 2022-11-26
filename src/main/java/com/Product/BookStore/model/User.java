@@ -6,28 +6,27 @@ import javax.persistence.*;
 @Table(name="user")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="uId", nullable=false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="user_id", nullable=false)
     private int uId;
 
-    @Column(name="username", nullable=false, unique = true)
+    @Column(name="user_name", unique = true)
     //not blank annotation
     private String username;
 
-    @Column(name="mail", nullable=false, unique = true)
+    @Column(name="email", unique = true)
     private String mail;
 
-    @Column(name="phone", nullable=false, unique = true)
+    @Column(name="phone", nullable = false, unique = true)
     private long phone;
 
-    @Column(name="wallet", nullable=false)
+    @Column(name="wallet")
     private int wallet;
 
-    @Column(name="status", nullable=false)
+    @Column(name="user_status", nullable = false)
     private boolean status;
 
-    @Column(name="price", nullable=false)
-    private int price;
+
 
     public int getuId() {
         return uId;
@@ -77,11 +76,4 @@ public class User {
         this.status = status;
     }
 
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
 }

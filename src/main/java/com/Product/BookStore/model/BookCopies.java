@@ -3,14 +3,14 @@ package com.Product.BookStore.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="bookCopies")
+@Table(name="bookCount")
 public class BookCopies {
 
     @Id
-    @Column(name="bId", nullable=false, unique = true)
+    @Column(name="bookId", nullable=false, unique = true)
     private long bId;
 
-    @Column(name = "copies", nullable=false)
+    @Column(name = "bookCopies", nullable=false)
     private int copies;
 
 

@@ -4,14 +4,14 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="books")
+@Table(name="book")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="bId", nullable=false)
+    @Column(name="bookId", nullable=false)
     private int bId;
 
-    @Column(name="book_name", nullable=false)
+    @Column(name="bookName", nullable=false)
     //not blank annotation
     private String bookName;
 
@@ -24,10 +24,10 @@ public class Book {
     @Column(name="price", nullable=false)
     private int price;
 
-    @Column(name="likes")
+    @Column(name="bookLikes")
     private int likes;
 
-    @Column(name="date_time", columnDefinition = "TIMESTAMP")
+    @Column(name="log", columnDefinition = "TIMESTAMP")
     private LocalDateTime localDateTime;
 
     public int getbId() {
