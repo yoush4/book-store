@@ -4,6 +4,7 @@ import com.Product.BookStore.exception.UserException;
 import com.Product.BookStore.model.*;
 import com.Product.BookStore.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -133,11 +134,15 @@ public class GeneralServiceImpl implements GeneralService{
         Review r=new Review();
         if(u.isPresent() && b.isPresent())
         {
-            r.setuId(user.getuId());
-            r.setbId(book.getbId());
-            r.setReview(review);
-            reviewRepository.save(r);
+            if(ifRented(uId,bookId)) {
+                r.setuId(user.getuId());
+                r.setbId(book.getbId());
+                r.setReview(review);
+                reviewRepository.save(r);
                 return new ResponseEntity<>(HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -150,19 +155,49 @@ public class GeneralServiceImpl implements GeneralService{
         Book book=b.get();
         if(u.isPresent() && b.isPresent())
         {
-            book.setLikes(book.getLikes()+1);
-            bookRepository.save(book);
-            return new ResponseEntity<>(HttpStatus.OK);
+            if(ifRented(uId,bookId)) {
+                book.setLikes(book.getLikes() + 1);
+                bookRepository.save(book);
+                return new ResponseEntity<>(HttpStatus.OK);
+
+            }
+            else{
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @Override
-    public ResponseEntity<List<Book>> availableBooks() {
-        List<Book> list= new ArrayList<>();
-        list=this.bookRepository.findAll();
-        return (ResponseEntity<List<Book>>) list;
+    private boolean ifRented(int uId, int bookId) {
+        Optional<User> u = userRepository.findById(uId);
+        Optional<Book> b = bookRepository.findById(bookId);
+        if(u.isPresent() && b.isPresent()){
+            List<Rented> list= new ArrayList<>();
+            list=this.rentedRepository.findAll();
+            for (Rented r:list) {
+                if(r.getuId()==uId && r.getbId()==bookId){
+                    return true;
+                }
+            }
+            return false;
+
+        }
+
+
+        return false;
     }
+
+//    @Override
+//    public ResponseEntity<List<Book>> availableBooks() {
+//        List<Book> list= new ArrayList<>();
+//        list=this.bookRepository.findAll();
+//        return (ResponseEntity<List<Book>>) list;
+//    }
+//    @Query(value = "select r from rented r where user_id=?1")
+//     ResponseEntity<List<Rented>> showTransactions(int uId){
+//
+//    };
+
 
 
 };

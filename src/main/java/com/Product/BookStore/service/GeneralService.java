@@ -3,6 +3,7 @@ package com.Product.BookStore.service;
 import com.Product.BookStore.model.Book;
 import com.Product.BookStore.model.Rented;
 import com.Product.BookStore.model.User;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -18,6 +19,7 @@ public interface GeneralService {
 
     ResponseEntity<HttpStatus> likeBook(int uId, int bookId);
 
-    ResponseEntity<List<Book>> availableBooks();
+    //ResponseEntity<List<Book>> availableBooks();
+
 
 }
