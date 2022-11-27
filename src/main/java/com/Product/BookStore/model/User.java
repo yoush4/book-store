@@ -24,7 +24,7 @@ public class User {
     private long phone;
 
     @Column(name="wallet")
-    private int wallet;
+    private double wallet;
 
     @Column(name="user_status", nullable = false)
     private boolean status;
@@ -66,11 +66,11 @@ public class User {
         this.phone = phone;
     }
 
-    public int getWallet() {
+    public double getWallet() {
         return wallet;
     }
 
-    public void setWallet(int wallet) {
+    public void setWallet(double wallet) {
         this.wallet = wallet;
     }
 

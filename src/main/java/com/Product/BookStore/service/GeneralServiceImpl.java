@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 @Transactional
@@ -30,10 +32,61 @@ public class GeneralServiceImpl implements GeneralService{
     @Autowired
     private BookCopiesRepository bookCopiesRepository;
 
+    @Autowired
+    private RentedRepository rentedRepository;
+
+    @Override
+    public ResponseEntity<HttpStatus> returnBook(int rentedId){
+
+        //System.out.println(uId + " " + bookId);
+        Optional<Rented> rented = rentedRepository.findById(rentedId);
+
+
+        //Optional<BookCopies> bc=bookCopiesRepository.findById(bookId);
+
+        //User user=u.get();
+        Rented r=rented.get();
+
+        //Book book=b.get();
+
+        //System.out.println("BOOK---------------------"+book.getBookName());
+        //System.out.println("USER---------------------"+user.getUsername());
+        //BookCopies bookCopies=bc.get();
+        //System.out.println("COPIES---------------------"+bookCopies.getCopies());
+        //Rented r=new Rented();
+
+        if(rented.isPresent())
+        {
+            Optional<Book> b = bookRepository.findById(r.getbId());
+            Book book=b.get();
+            double rent_amount=0.1*(double)book.getPrice();
+            double security_deposit=0.2*(double)book.getPrice();
+
+            Optional<BookCopies> bc=bookCopiesRepository.findById(r.getbId());
+            BookCopies bookCopies=bc.get();
+
+            Optional<User> u=userRepository.findById(r.getuId());
+            User user=u.get();
+
+            user.setWallet(user.getWallet()+security_deposit-rent_amount);
+            bookCopies.setCopies(bookCopies.getCopies()+1);
+            user.setBooksRented(user.getBooksRented()-1);
+
+            r.setReturnDateTime(LocalDateTime.now());
+
+            generalRepository.save(r);
+            bookCopiesRepository.save(bookCopies);
+            userRepository.save(user);
+
+
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @Override
     public ResponseEntity<HttpStatus> borrowBook(int uId, int bookId){
 
-        System.out.println(uId + " " + bookId);
+        //System.out.println(uId + " " + bookId);
         Optional<User> u = userRepository.findById(uId);
         Optional<Book> b = bookRepository.findById(bookId);
         Optional<BookCopies> bc=bookCopiesRepository.findById(bookId);
@@ -89,5 +142,27 @@ public class GeneralServiceImpl implements GeneralService{
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @Override
+    public ResponseEntity<HttpStatus> likeBook(int uId, int bookId) {
+        Optional<User> u = userRepository.findById(uId);
+        Optional<Book> b = bookRepository.findById(bookId);
+        //User user=u.get();
+        Book book=b.get();
+        if(u.isPresent() && b.isPresent())
+        {
+            book.setLikes(book.getLikes()+1);
+            bookRepository.save(book);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
-    };
+    @Override
+    public ResponseEntity<List<Book>> availableBooks() {
+        List<Book> list= new ArrayList<>();
+        list=this.bookRepository.findAll();
+        return (ResponseEntity<List<Book>>) list;
+    }
+
+
+};
