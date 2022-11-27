@@ -12,7 +12,7 @@ public class BookCopies {
 //    private int id;
 
     @Id
-    @Column(name="book_id", nullable=false, unique = true)
+    @Column(name="bookid", nullable=false, unique = true)
     private int bId;
 
     @Column(name = "book_copies", nullable=false)

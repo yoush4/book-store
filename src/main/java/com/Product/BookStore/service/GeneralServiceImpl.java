@@ -44,10 +44,10 @@ public class GeneralServiceImpl implements GeneralService{
         User user=u.get();
 
         Book book=b.get();
-        System.out.println("BOOK---------------------"+book.getBookName());
-        System.out.println("USER---------------------"+user.getUsername());
+        //System.out.println("BOOK---------------------"+book.getBookName());
+        //System.out.println("USER---------------------"+user.getUsername());
         BookCopies bookCopies=bc.get();
-        System.out.println("COPIES---------------------"+bookCopies.getCopies());
+        //System.out.println("COPIES---------------------"+bookCopies.getCopies());
         Rented r=new Rented();
         if(u.isPresent() && b.isPresent())
         {

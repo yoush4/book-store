@@ -14,17 +14,17 @@ public class Rented {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="rented_id", nullable=false)
     private int rentedId;
-    @Column(name="bookId", nullable=false)
+    @Column(name="book_id", nullable=false)
     private int bId;
 
     @Column(name="userId", nullable=false)
     private int uId;
 
     @CreationTimestamp
-    @Column(name="issueDateTime", columnDefinition = "TIMESTAMP", nullable=false)
+    @Column(name="issue_date_time", columnDefinition = "TIMESTAMP", nullable=false)
     private Date issueDateTime;
 
-    @Column(name="returnDateTime", columnDefinition = "TIMESTAMP")
+    @Column(name="return_date_time", columnDefinition = "TIMESTAMP")
     private Date returnDateTime;
 
 //    @Column(name="amount", nullable=false)
