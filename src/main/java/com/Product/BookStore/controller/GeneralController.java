@@ -5,10 +5,7 @@ import com.Product.BookStore.service.GeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class GeneralController {
@@ -20,4 +17,10 @@ public class GeneralController {
     private ResponseEntity<HttpStatus> borrowBook(@PathVariable int uId, @PathVariable int bookId){
         return generalService.borrowBook(uId,bookId);
     }
+
+    @PostMapping("/books/review/{uId}/{bookId}")
+    private ResponseEntity<HttpStatus> updateUser(@PathVariable int uId,@PathVariable int bookId, @RequestBody String review){
+        return generalService.reviewBook(uId,bookId,review);
+    }
+
 }

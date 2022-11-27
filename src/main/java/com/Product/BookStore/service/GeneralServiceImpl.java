@@ -1,18 +1,12 @@
 package com.Product.BookStore.service;
 
 import com.Product.BookStore.exception.UserException;
-import com.Product.BookStore.model.Book;
-import com.Product.BookStore.model.BookCopies;
-import com.Product.BookStore.model.Rented;
-import com.Product.BookStore.model.User;
-import com.Product.BookStore.repository.BookCopiesRepository;
-import com.Product.BookStore.repository.BookRepository;
-import com.Product.BookStore.repository.UserRepository;
+import com.Product.BookStore.model.*;
+import com.Product.BookStore.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import com.Product.BookStore.repository.GeneralRepository;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
@@ -23,6 +17,9 @@ public class GeneralServiceImpl implements GeneralService{
 
     @Autowired
     private GeneralRepository generalRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -62,7 +59,6 @@ public class GeneralServiceImpl implements GeneralService{
                 r.setuId(user.getuId());
                 r.setbId(book.getbId());
 
-                //bookCopies.setCopies(bookCopies.getCopies()-1);
 
                 generalRepository.save(r);
                 bookCopiesRepository.save(bookCopies);
@@ -72,6 +68,26 @@ public class GeneralServiceImpl implements GeneralService{
             }
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    };
+    }
 
-}
+    @Override
+    public ResponseEntity<HttpStatus> reviewBook(int uId, int bookId, String review) {
+
+        Optional<User> u = userRepository.findById(uId);
+        Optional<Book> b = bookRepository.findById(bookId);
+        User user=u.get();
+        Book book=b.get();
+        Review r=new Review();
+        if(u.isPresent() && b.isPresent())
+        {
+            r.setuId(user.getuId());
+            r.setbId(book.getbId());
+            r.setReview(review);
+            reviewRepository.save(r);
+                return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
+    };

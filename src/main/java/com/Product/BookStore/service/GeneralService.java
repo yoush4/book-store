@@ -9,4 +9,6 @@ public interface GeneralService {
 
     ResponseEntity<HttpStatus> borrowBook(int uId, int bookId);
 
+    ResponseEntity<HttpStatus> reviewBook(int uId, int bookId, String review);
+
 }
