@@ -1,5 +1,6 @@
 package com.Product.BookStore.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.NonNull;
 
 import javax.persistence.*;
@@ -28,6 +29,9 @@ public class User {
     @Column(name="user_status", nullable = false)
     private boolean status;
 
+    @Column(name="books_rented")
+    //@JsonIgnore
+    private int booksRented;
 
 
     public int getuId() {
@@ -78,4 +82,11 @@ public class User {
         this.status = status;
     }
 
+    public int getBooksRented() {
+        return booksRented;
+    }
+
+    public void setBooksRented(int booksRented) {
+        this.booksRented = booksRented;
+    }
 }

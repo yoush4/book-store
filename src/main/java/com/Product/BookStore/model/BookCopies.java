@@ -3,22 +3,27 @@ package com.Product.BookStore.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="bookCount")
+@Table(name="bookcount")
 public class BookCopies {
 
-    @Id
-    @Column(name="bookId", nullable=false, unique = true)
-    private long bId;
 
-    @Column(name = "bookCopies", nullable=false)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name="id", nullable=false)
+//    private int id;
+
+    @Id
+    @Column(name="book_id", nullable=false, unique = true)
+    private int bId;
+
+    @Column(name = "book_copies", nullable=false)
     private int copies;
 
 
-    public long getbId() {
+    public int getbId() {
         return bId;
     }
 
-    public void setbId(long bId) {
+    public void setbId(int bId) {
         this.bId = bId;
     }
 

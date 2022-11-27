@@ -9,5 +9,9 @@ public interface UserService {
     User suspendUser(User user);
     User updateUser(User user);
 
+    User addMoney(User user);
+
+
+
 
 }

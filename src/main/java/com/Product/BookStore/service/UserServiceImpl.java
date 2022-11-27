@@ -52,5 +52,23 @@ public class UserServiceImpl implements UserService {
         }
     };
 
+    @Override
+    public User addMoney(User user){
+        Optional<User> u=this.userRepository.findById(user.getuId());
+        if(u.isPresent()){
+            User userUpdate=u.get();
+            if(user.getWallet() > 0 && user.getWallet() % 500 == 0)
+                userUpdate.setWallet(user.getWallet() + u.get().getWallet());
+            return this.userRepository.save(userUpdate);
+        }else{
+            throw new UserException("User not found with id: "+user.getuId());
+        }
+
+    }
+
+
+
+    ;
+
 
 }

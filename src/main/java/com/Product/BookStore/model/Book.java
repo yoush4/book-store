@@ -1,17 +1,20 @@
 package com.Product.BookStore.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name="book")
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="bookId", nullable=false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="book_id", nullable=false)
     private int bId;
 
-    @Column(name="bookName", nullable=false)
+    @Column(name="book_name")
     //not blank annotation
     private String bookName;
 
@@ -24,11 +27,12 @@ public class Book {
     @Column(name="price", nullable=false)
     private int price;
 
-    @Column(name="bookLikes")
+    @Column(name="book_likes")
     private int likes;
 
-    @Column(name="log", columnDefinition = "TIMESTAMP")
-    private LocalDateTime localDateTime;
+    @CreationTimestamp
+    @Column(name = "log")
+    private Date localDateTime;
 
     public int getbId() {
         return bId;
@@ -78,11 +82,11 @@ public class Book {
         this.likes = likes;
     }
 
-    public LocalDateTime getLocalDateTime() {
+    public Date getLocalDateTime() {
         return localDateTime;
     }
 
-    public void setLocalDateTime(LocalDateTime localDateTime) {
+    public void setLocalDateTime(Date localDateTime) {
         this.localDateTime = localDateTime;
     }
 }

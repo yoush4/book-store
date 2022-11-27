@@ -14,14 +14,14 @@ create table user(
     );
     
 create table book(
-	bookId int not null,
-    bookName varchar(20),
+	book_id int not null auto_increment,
+    book_name varchar(20),
     author varchar(20),
     price int not null,
     category varchar(20),
-    bookLikes boolean,
-    log timestamp,
-    primary key(bookId)
+    book_likes int default null,
+    log timestamp default current_timestamp,
+    primary key(book_id)
     );
 create table rented(
 	user_id int not null,
@@ -29,7 +29,7 @@ create table rented(
     amount int not null,
     issueDateTime timestamp,
     returnDateTime timestamp,	
-    foreign key(bookId) REFERENCES book(bookId),
+    foreign key(bookId) REFERENCES book(book_id),
     foreign key(user_id) REFERENCES user(user_id)
     );
 create table review(
@@ -37,12 +37,15 @@ create table review(
     bookId int not null,
     review varchar(20),
 	
-    foreign key(bookId) REFERENCES book(bookId),
+    foreign key(bookId) REFERENCES book(book_id),
     foreign key(user_id) REFERENCES user(user_id)
     );
 
  create table bookCount(
 	bookCopies int ,
     bookId int not null,
-        foreign key(bookId) REFERENCES Book(bookId)
+        foreign key(bookId) REFERENCES Book(book_id)
         );
+        
+        select * from user;
+        
