@@ -1,5 +1,7 @@
 package com.Product.BookStore.model;
 
+import lombok.NonNull;
+
 import javax.persistence.*;
 
 @Entity
