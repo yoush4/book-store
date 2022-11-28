@@ -14,18 +14,18 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/users/add")
+    @PostMapping("/users/add") //done
     private ResponseEntity<User> createUser(@RequestBody User user) {
         return ResponseEntity.ok().body(this.userService.createUser(user));
     }
 
-    @PutMapping("/users/suspend/{uId}")
+    @PutMapping("/users/suspend/{uId}") //done
     private ResponseEntity<HttpStatus> suspendUser(@PathVariable int uId){
         userService.suspendUser(uId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/users/update/{uId}")
+    @PutMapping("/users/update/{uId}") //done
     private ResponseEntity<User> updateUser(@PathVariable int uId, @RequestBody User user){
         user.setuId(uId);
         return ResponseEntity.ok().body(this.userService.updateUser(user));
@@ -37,7 +37,7 @@ public class UserController {
 //        return ResponseEntity.ok().body(this.userService.addMoney(user));
 //    }
 
-    @PutMapping("/users/addmoney/{uId}/{money}")
+    @PutMapping("/users/addmoney/{uId}/{money}") //done
     private ResponseEntity<User> addMoney(@PathVariable int uId,@PathVariable int money){
         userService.addMoney(uId,money);
         return new ResponseEntity<>(HttpStatus.OK);

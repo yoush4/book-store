@@ -21,31 +21,31 @@ public class GeneralController {
     //@Autowired
     //private RentedRepository rentedRepository;
 
-    @PutMapping("/books/rent/{uId}/{bookId}")
+    @PutMapping("/books/rent/{uId}/{bookId}") //done
     private ResponseEntity<HttpStatus> borrowBook(@PathVariable int uId, @PathVariable int bookId){
         return generalService.borrowBook(uId,bookId);
     }
 
-    @PutMapping("/books/return/{rentedId}")
+    @PutMapping("/books/return/{rentedId}") //done
     private ResponseEntity<HttpStatus> returnBook(@PathVariable int rentedId){
         return generalService.returnBook(rentedId);
     }
 
-    @PostMapping("/books/review/{uId}/{bookId}")
+    @PostMapping("/books/review/{uId}/{bookId}") //done
     private ResponseEntity<HttpStatus> reviewBook(@PathVariable int uId,@PathVariable int bookId, @RequestBody String review){
         return generalService.reviewBook(uId,bookId,review);
     }
 
-    @PostMapping("/books/like/{uId}/{bookId}")
+    @PostMapping("/books/like/{uId}/{bookId}") //done
     private ResponseEntity<HttpStatus> likeBook(@PathVariable int uId, @PathVariable int bookId){
         return generalService.likeBook(uId,bookId);
     }
 
-    @GetMapping("/books")
-    private ResponseEntity<List<Book>> availableBooks() {
-        //return ResponseEntity.ok().body(this.productService.getProd());
-        return null;
-    }
+//    @GetMapping("/books")
+//    private ResponseEntity<List<Book>> availableBooks() {
+//        //return ResponseEntity.ok().body(this.productService.getProd());
+//        return null;
+//    }
 
 //    @GetMapping("/user/transactions/{userId}")
 //    private ResponseEntity<List<Rented>> showTransactions(@PathVariable int userId) {

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import com.Product.BookStore.repository.BookRepository;
 
 import javax.transaction.Transactional;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,7 +45,19 @@ public class BookServiceImpl implements BookService{
             return new ResponseEntity<>(HttpStatus.OK);
 
         }
+    }
 
+    @Override
+    public List<Book> sortedBooksByDate() {
+        List<Book> bookItems= bookRepository.findAll();
+        bookItems.sort(Comparator.comparing(Book::getLocalDateTime));
+        return bookItems;
+    }
 
+    @Override
+    public List<Book> sortedBooksByLikes() {
+        List<Book> bookItems= bookRepository.findAll();
+        bookItems.sort(Comparator.comparing(Book::getLikes).reversed());
+        return bookItems;
     }
 }

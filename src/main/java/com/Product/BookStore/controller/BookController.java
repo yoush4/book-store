@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class BookController {
 
@@ -19,26 +21,26 @@ public class BookController {
     @Autowired
     private GeneralService generalService;
 
-    @PostMapping("/books/add")
+    @PostMapping("/books/add") //done
     private ResponseEntity<Book> addBook(@RequestBody Book book) {
         return ResponseEntity.ok().body(this.bookService.addBook(book));
     }
 
 
-    @PostMapping("/books/addcopies")
+    @PostMapping("/books/addcopies") //done
     private ResponseEntity<HttpStatus> addCopies( @RequestBody BookCopies bc){
         //bc.setbId(bId);
         bookService.addCopies(bc);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-//
-//    @GetMapping("/sortBooksByDate")
-//    private  List<Book> sortedBooksByDate(){
-//        return bookService.sortedBooksByDate();
-//    }
-//    @GetMapping("/sortBooksByLikes")
-//    private  List<Book> sortedBooksByLikes(){
-//        return bookService.sortedBooksByLikes();
-//    }
+
+    @GetMapping("/sortBooksByDate")
+    private List<Book> sortedBooksByDate(){
+        return bookService.sortedBooksByDate();
+    }
+    @GetMapping("/sortBooksByLikes")
+    private  List<Book> sortedBooksByLikes(){
+        return bookService.sortedBooksByLikes();
+    }
 
 }

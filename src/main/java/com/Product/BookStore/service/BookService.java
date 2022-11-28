@@ -11,4 +11,7 @@ public interface BookService {
     Book addBook(Book book);
 
     ResponseEntity<HttpStatus> addCopies(BookCopies bc);
+
+    List<Book> sortedBooksByDate();
+    List<Book> sortedBooksByLikes();
 }
