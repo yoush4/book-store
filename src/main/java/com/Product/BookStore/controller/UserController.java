@@ -3,6 +3,7 @@ package com.Product.BookStore.controller;
 import com.Product.BookStore.model.User;
 import com.Product.BookStore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +20,9 @@ public class UserController {
     }
 
     @PutMapping("/users/suspend/{uId}")
-    private ResponseEntity<User> suspendUser(@PathVariable int uId, @RequestBody User user){
-        user.setuId(uId);
-        return ResponseEntity.ok().body(this.userService.suspendUser(user));
+    private ResponseEntity<HttpStatus> suspendUser(@PathVariable int uId){
+        userService.suspendUser(uId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/users/update/{uId}")
@@ -36,10 +37,10 @@ public class UserController {
 //        return ResponseEntity.ok().body(this.userService.addMoney(user));
 //    }
 
-    @PutMapping("/users/addmoney/{uId}")
-    private ResponseEntity<User> addMoney(@PathVariable int uId, @RequestBody User user){
-        user.setuId(uId);
-        return ResponseEntity.ok().body(this.userService.addMoney(user));
+    @PutMapping("/users/addmoney/{uId}/{money}")
+    private ResponseEntity<User> addMoney(@PathVariable int uId,@PathVariable int money){
+        userService.addMoney(uId,money);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

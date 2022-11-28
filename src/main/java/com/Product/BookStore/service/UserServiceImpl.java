@@ -4,6 +4,8 @@ import com.Product.BookStore.exception.UserException;
 import com.Product.BookStore.model.User;
 import com.Product.BookStore.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
@@ -24,14 +26,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User suspendUser(User user){
-        Optional<User> u=this.userRepository.findById(user.getuId());
+    public ResponseEntity<HttpStatus> suspendUser(int uId){
+        Optional<User> u=this.userRepository.findById(uId);
         if(u.isPresent()){
             User userUpdate=u.get();
             userUpdate.setStatus(false);
-            return this.userRepository.save(userUpdate);
+            userRepository.save(userUpdate);
+            return new ResponseEntity<>(HttpStatus.OK);
         }else{
-            throw new UserException("User not found with id: "+user.getuId());
+            throw new UserException("User not found with id: "+uId);
         }
     };
 
@@ -53,15 +56,16 @@ public class UserServiceImpl implements UserService {
     };
 
     @Override
-    public User addMoney(User user){
-        Optional<User> u=this.userRepository.findById(user.getuId());
+    public ResponseEntity<HttpStatus> addMoney(int uId, int money){
+        Optional<User> u=this.userRepository.findById(uId);
         if(u.isPresent()){
             User userUpdate=u.get();
-            if(user.getWallet() > 0 && user.getWallet() % 500 == 0)
-                userUpdate.setWallet(user.getWallet() + u.get().getWallet());
-            return this.userRepository.save(userUpdate);
+            if(money > 0 && money % 500 == 0)
+                userUpdate.setWallet(money + u.get().getWallet());
+            userRepository.save(userUpdate);
+            return new ResponseEntity<>(HttpStatus.OK);
         }else{
-            throw new UserException("User not found with id: "+user.getuId());
+            throw new UserException("User not found with id: "+uId);
         }
 
     }

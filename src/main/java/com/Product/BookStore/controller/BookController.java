@@ -31,4 +31,14 @@ public class BookController {
         bookService.addCopies(bc);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+//
+//    @GetMapping("/sortBooksByDate")
+//    private  List<Book> sortedBooksByDate(){
+//        return bookService.sortedBooksByDate();
+//    }
+//    @GetMapping("/sortBooksByLikes")
+//    private  List<Book> sortedBooksByLikes(){
+//        return bookService.sortedBooksByLikes();
+//    }
+
 }
